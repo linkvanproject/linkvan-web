@@ -1,0 +1,74 @@
+{
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier", "import"],
+  "rules": {
+    "lines-between-class-members": "warn",
+    "no-else-return": "error",
+    "no-nested-ternary": 1,
+    "no-restricted-globals": ["error", "event"],
+    "no-restricted-syntax": ["error", "WithStatement"],
+    "no-shadow": "warn",
+    "prefer-destructuring": [
+      "warn",
+      {
+        "object": true,
+        "array": false
+      },
+      {
+        "enforceForRenamedProperties": true
+      }
+    ],
+    "import/no-unresolved": [2, { "ignore": [".png$"] }],
+    "import/default": "warn",
+    "import/prefer-default-export": 1,
+    "prettier/prettier": "error",
+    "react/default-props-match-prop-types": 1,
+    "react/destructuring-assignment": 1,
+    "react/forbid-prop-types": [2, { "forbid": ["any"] }],
+    "react/jsx-equals-spacing": 2,
+    "react/jsx-no-undef": [2, { "allowGlobals": true }],
+    "react/jsx-wrap-multilines": [
+      1,
+      {
+        "declaration": "parens-new-line",
+        "assignment": "parens-new-line",
+        "return": "parens-new-line",
+        "arrow": "parens-new-line",
+        "condition": "parens-new-line",
+        "logical": "ignore",
+        "prop": "ignore"
+      }
+    ],
+    "react/no-multi-comp": [1, { "ignoreStateless": true }],
+    "react/no-unused-prop-types": 1,
+    "react/prefer-es6-class": 1,
+    "react/require-default-props": 1,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules"]
+      }
+    }
+  }
+}
