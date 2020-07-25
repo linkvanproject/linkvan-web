@@ -8,7 +8,7 @@ const Home = () => {
       <Head>
         <title>Linkvan</title>
       </Head>
-      <h3>What service are you looking for?</h3>
+      <h3>What service are you looking for???</h3>
       <p>
         <a href="/">
           <span>Category Item</span>
