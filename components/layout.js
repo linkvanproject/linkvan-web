@@ -65,6 +65,16 @@ const SpaceXS = styled.div`
   padding: 6px 0;
 `
 
+const Footer = styled.footer`
+  margin: 30px 0;
+  text-align: center;
+`
+
+const Separator = styled.span`
+  margin: 0 12px;
+  border-right: 1px solid #ddd;
+`
+
 const Layout = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
@@ -117,11 +127,16 @@ const Layout = ({ children }) => {
             </Nav>
           </Container>
         </Header>
-        <main>{children}</main>
-        <footer>
-          <a href="/">Sign in</a> |<a href="/">Disclaimer</a> |
-          <a href="/">About Us</a> |<a href="/">Sign up</a>
-        </footer>
+        {children}
+        <Footer>
+          <Link href="/">Sign in</Link>
+          <Separator />
+          <Link href="/">Disclaimer</Link>
+          <Separator />
+          <Link href="/">About us</Link>
+          <Separator />
+          <Link href="/">Sign up</Link>
+        </Footer>
       </div>
     </ThemeProvider>
   )
