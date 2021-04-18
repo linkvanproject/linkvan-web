@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { useTheme } from '@material-ui/core/styles'
@@ -7,6 +7,12 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import Stack from 'stack-styled'
 import Layout from 'components/layout'
 import HR from 'components/hr'
@@ -86,9 +92,14 @@ const CategoryButton = ({ title, icon }) => {
   )
 }
 
-const Home = () => {
+const Home = ({ site_stats, notices, alert, ...rest }) => {
+  const [showAlert, setShowAlert] = useState(false)
+
+  const openAlert = () => setShowAlert(true)
+  const closeAlert = () => setShowAlert(false)
+
   return (
-    <Layout>
+    <Layout stats={site_stats}>
       <Head>
         <title>Linkvan</title>
       </Head>
@@ -99,32 +110,58 @@ const Home = () => {
               <Typography variant="h5">
                 What service are you looking for???
               </Typography>
-              {/* TODO Shows if has active alert */}
-              <AlertButton variant="outlined">
-                <AlertContent variant="outlined" severity="warning">
-                  Alert
-                </AlertContent>
-              </AlertButton>
+              {!!alert && (
+                <>
+                  <AlertButton variant="outlined" onClick={openAlert}>
+                    <AlertContent variant="outlined" severity="warning">
+                      Alert
+                    </AlertContent>
+                  </AlertButton>
+                  <Dialog
+                    open={showAlert}
+                    onClose={closeAlert}
+                    fullWidth
+                    maxWidth="md"
+                  >
+                    <DialogTitle>{alert.title}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        <div
+                          dangerouslySetInnerHTML={{ __html: alert.content }}
+                        />
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={closeAlert} color="primary" autoFocus>
+                        Close
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </>
+              )}
             </TitleBox>
           </Grid>
           <Grid item xs={12}>
             <Stack gridGap={3}>
-              {/* TODO Shows if has covid notices */}
-              <CategoryButton title="COVID-19" icon={<Virus />} />
+              {!!notices?.covid19 && (
+                <CategoryButton title="COVID-19" icon={<Virus />} />
+              )}
               <CategoryButton
                 title="Overdose Prevention"
                 icon={<OverdosePrevention />}
               />
-              {/* TODO Shows if has warming center notices */}
-              <CategoryButton
-                title="Warming Center"
-                icon={<WarmingCooling />}
-              />
-              {/* TODO Shows if has cooling center notices */}
-              <CategoryButton
-                title="Cooling Center"
-                icon={<WarmingCooling />}
-              />
+              {!!notices?.warming_center && (
+                <CategoryButton
+                  title="Warming Center"
+                  icon={<WarmingCooling />}
+                />
+              )}
+              {!!notices?.cooling_center && (
+                <CategoryButton
+                  title="Cooling Center"
+                  icon={<WarmingCooling />}
+                />
+              )}
               <HR />
               <CategoryButton title="Shelter" icon={<Shelter />} />
               <CategoryButton title="Food" icon={<Food />} />
@@ -141,6 +178,13 @@ const Home = () => {
       </Container>
     </Layout>
   )
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`${process.env.BACKEND_URL}/api/home`)
+  const props = await res.json()
+
+  return { props }
 }
 
 export default Home
