@@ -11,6 +11,7 @@ import Link from '@material-ui/core/Link'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import formatDate from 'utils/format-date'
 import theme from '../theme'
 
 const TopAlert = styled(Alert)`
@@ -75,7 +76,11 @@ const Separator = styled.span`
   border-right: 1px solid #ddd;
 `
 
-const Layout = ({ children }) => {
+const LastUpdated = styled(Typography)`
+  color: grey;
+`
+
+const Layout = ({ stats, children }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -89,7 +94,7 @@ const Layout = ({ children }) => {
         <Header>
           <TopAlert severity="error">
             Please be aware that some services may be impacted due to the
-            ongoing COVID-19 response. Last updated: Jun 9, 2020
+            ongoing COVID-19 response.
           </TopAlert>
           <Container>
             <Nav>
@@ -123,6 +128,11 @@ const Layout = ({ children }) => {
                     </SearchBox>
                   </form>
                 </Grid>
+                <Grid item xs={12}>
+                  <LastUpdated variant="caption">
+                    Last updated: {formatDate(stats.last_updated)}
+                  </LastUpdated>
+                </Grid>
               </Grid>
             </Nav>
           </Container>
@@ -143,11 +153,13 @@ const Layout = ({ children }) => {
 }
 
 Layout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  stats: PropTypes.object
 }
 
 Layout.defaultProps = {
-  children: null
+  children: null,
+  stats: {}
 }
 
 export default Layout
