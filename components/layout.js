@@ -22,6 +22,7 @@ const Header = styled.div`
   background: #f8f8f8;
   border-bottom: 2px solid #ccc;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
 `
 
 const Nav = styled.nav`

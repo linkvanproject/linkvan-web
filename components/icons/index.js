@@ -1,5 +1,6 @@
 import Alert from './alert'
 import ChevronRight from './chevron-right'
+import ChevronLeft from './chevron-left'
 import CrisisLines from './crisis-lines'
 import Food from './food'
 import Hygiene from './hygiene'
@@ -12,10 +13,12 @@ import Shelter from './shelter'
 import Technology from './technology'
 import Virus from './virus'
 import WarmingCooling from './warming-cooling'
+import Phone from './phone'
 
 export {
   Alert,
   ChevronRight,
+  ChevronLeft,
   Virus,
   OverdosePrevention,
   WarmingCooling,
@@ -27,5 +30,6 @@ export {
   Legal,
   Learning,
   CrisisLines,
-  Notices
+  Notices,
+  Phone
 }
