@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
+import fetcher from 'utils/fetcher'
 import styled from 'styled-components'
 import { useTheme } from '@material-ui/core/styles'
 import Alert from '@material-ui/lab/Alert'
@@ -36,7 +39,7 @@ const TitleBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 20px 0;
+  margin-bottom: 20px;
 `
 
 const AlertButton = styled(ButtonBase)`
@@ -66,7 +69,7 @@ const Title = styled.div`
   flex-grow: 1;
   text-align: left;
   padding: 0px 12px;
-  font-size: ${({ fontSize }) => fontSize}
+  font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
 `
 
@@ -74,7 +77,7 @@ const IconChevronRight = styled(ChevronRight)`
   flex-grow: 0;
 `
 
-const CategoryButton = ({ title, icon }) => {
+const CategoryButton = ({ title, icon, onClick }) => {
   const theme = useTheme()
 
   const {
@@ -82,9 +85,9 @@ const CategoryButton = ({ title, icon }) => {
   } = theme
 
   return (
-    <Category>
+    <Category onClick={onClick}>
       <Icon>{icon}</Icon>
-      <Title fontSize={body1} fontWeight={fontWeightBold}>
+      <Title fontSize={body1.fontSize} fontWeight={fontWeightBold}>
         {title}
       </Title>
       <IconChevronRight size={20} />
@@ -92,14 +95,19 @@ const CategoryButton = ({ title, icon }) => {
   )
 }
 
-const Home = ({ site_stats, notices, alert, ...rest }) => {
+const Home = () => {
+  const router = useRouter()
   const [showAlert, setShowAlert] = useState(false)
+
+  const { data } = useSWR('/api/home', fetcher)
 
   const openAlert = () => setShowAlert(true)
   const closeAlert = () => setShowAlert(false)
 
+  const goTo = (route) => () => router.push(route)
+
   return (
-    <Layout stats={site_stats}>
+    <Layout stats={data?.site_stats}>
       <Head>
         <title>Linkvan</title>
       </Head>
@@ -110,7 +118,7 @@ const Home = ({ site_stats, notices, alert, ...rest }) => {
               <Typography variant="h5">
                 What service are you looking for???
               </Typography>
-              {!!alert && (
+              {!!data?.alert && (
                 <>
                   <AlertButton variant="outlined" onClick={openAlert}>
                     <AlertContent variant="outlined" severity="warning">
@@ -123,11 +131,13 @@ const Home = ({ site_stats, notices, alert, ...rest }) => {
                     fullWidth
                     maxWidth="md"
                   >
-                    <DialogTitle>{alert.title}</DialogTitle>
+                    <DialogTitle>{data.alert.title}</DialogTitle>
                     <DialogContent>
                       <DialogContentText>
                         <div
-                          dangerouslySetInnerHTML={{ __html: alert.content }}
+                          dangerouslySetInnerHTML={{
+                            __html: data.alert.content
+                          }}
                         />
                       </DialogContentText>
                     </DialogContent>
@@ -143,48 +153,77 @@ const Home = ({ site_stats, notices, alert, ...rest }) => {
           </Grid>
           <Grid item xs={12}>
             <Stack gridGap={3}>
-              {!!notices?.covid19 && (
+              {!!data?.notices?.covid19 && (
                 <CategoryButton title="COVID-19" icon={<Virus />} />
               )}
               <CategoryButton
                 title="Overdose Prevention"
                 icon={<OverdosePrevention />}
               />
-              {!!notices?.warming_center && (
+              {!!data?.notices?.warming_center && (
                 <CategoryButton
                   title="Warming Center"
                   icon={<WarmingCooling />}
                 />
               )}
-              {!!notices?.cooling_center && (
+              {!!data?.notices?.cooling_center && (
                 <CategoryButton
                   title="Cooling Center"
                   icon={<WarmingCooling />}
                 />
               )}
               <HR />
-              <CategoryButton title="Shelter" icon={<Shelter />} />
-              <CategoryButton title="Food" icon={<Food />} />
-              <CategoryButton title="Medical" icon={<Medical />} />
-              <CategoryButton title="Hygiene" icon={<Hygiene />} />
-              <CategoryButton title="Technology" icon={<Technology />} />
-              <CategoryButton title="Legal" icon={<Legal />} />
-              <CategoryButton title="Learning" icon={<Learning />} />
-              <CategoryButton title="Crisis Lines" icon={<CrisisLines />} />
-              <CategoryButton title="Notices" icon={<Notices />} />
+              <CategoryButton
+                title="Shelter"
+                icon={<Shelter />}
+                onClick={goTo('/facilities?service=shelter')}
+              />
+              <CategoryButton
+                title="Food"
+                icon={<Food />}
+                onClick={goTo('/facilities?service=food')}
+              />
+              <CategoryButton
+                title="Medical"
+                icon={<Medical />}
+                onClick={goTo('/facilities?service=medical')}
+              />
+              <CategoryButton
+                title="Hygiene"
+                icon={<Hygiene />}
+                onClick={goTo('/facilities?service=hygiene')}
+              />
+              <CategoryButton
+                title="Technology"
+                icon={<Technology />}
+                onClick={goTo('/facilities?service=technology')}
+              />
+              <CategoryButton
+                title="Legal"
+                icon={<Legal />}
+                onClick={goTo('/facilities?service=legal')}
+              />
+              <CategoryButton
+                title="Learning"
+                icon={<Learning />}
+                onClick={goTo('/facilities?service=learning')}
+              />
+              <CategoryButton
+                title="Crisis Lines"
+                icon={<CrisisLines />}
+                onClick={goTo('')}
+              />
+              <CategoryButton
+                title="Notices"
+                icon={<Notices />}
+                onClick={goTo('')}
+              />
             </Stack>
           </Grid>
         </Grid>
       </Container>
     </Layout>
   )
-}
-
-export async function getServerSideProps() {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/home`)
-  const props = await res.json()
-
-  return { props }
 }
 
 export default Home
