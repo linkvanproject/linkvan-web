@@ -159,6 +159,7 @@ const Home = () => {
               <CategoryButton
                 title="Overdose Prevention"
                 icon={<OverdosePrevention />}
+                onClick={goTo('/facilities?service=overdose_prevention')}
               />
               {!!data?.notices?.warming_center && (
                 <CategoryButton
