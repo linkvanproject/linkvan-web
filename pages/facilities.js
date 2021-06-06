@@ -26,6 +26,7 @@ import {
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import Box from '@material-ui/core/Box'
+import getAvailability from 'utils/get-availability'
 
 const FilterBar = styled.div`
   display: flex;
@@ -42,13 +43,28 @@ const ColumnArrow = styled(Grid)`
   align-self: center;
 `
 
-const ListItem = ({ data }) => {
+const ListItem = ({ data, filter }) => {
   const theme = useTheme()
 
   const ColumnTwo = styled(Grid)`
     ${theme.breakpoints.up('md')} {
       text-align: right;
     }
+  `
+
+  const TagSuccess = styled.span`
+    font-weight: bold;
+    color: ${theme.palette.success.main};
+  `
+
+  const TagError = styled.span`
+    font-weight: bold;
+    color: ${theme.palette.error.main};
+  `
+
+  const TagWarning = styled.span`
+    font-weight: bold;
+    color: ${theme.palette.warning.main};
   `
 
   const getIcon = (icon) => {
@@ -71,34 +87,44 @@ const ListItem = ({ data }) => {
     return <StyledIcon key={icon} size={24} />
   }
 
-  const getAvailability = () => {
-    return 'Open' // TODO: display OPEN/CLOSING SOON/CLOSED/OPENING SOON
+  const availability = getAvailability(data.schedule)
+
+  const availabilityLabels = {
+    open: <TagSuccess>OPEN</TagSuccess>,
+    closed: <TagError>CLOSED</TagError>,
+    opening_soon: <TagSuccess>OPENING SOON</TagSuccess>,
+    closing_soon: <TagWarning>CLOSING SOON</TagWarning>
   }
 
+  if (filter === 'open' && availability !== 'open') return null
+
   return (
-    <Grid container>
-      <Grid item xs={11}>
-        <Grid container>
-          <Grid item xs={12} md={6}>
-            <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
-              {data.name}
-            </Box>
-            <div>
-              {getAvailability()} {data.services.map(getIcon)}
-            </div>
+    <>
+      <Grid container>
+        <Grid item xs={11}>
+          <Grid container>
+            <Grid item xs={12} md={6}>
+              <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
+                {data.name}
+              </Box>
+              <div>
+                {availabilityLabels[availability]} {data.services.map(getIcon)}
+              </div>
+            </Grid>
+            <ColumnTwo item xs={12} md={6}>
+              <div>{data.phone && `Call: ${data.phone}`}</div>
+              {/* TODO: make it clickable */}
+              <div>4 minutes walking</div>
+              {/* TODO: calculate walking distance */}
+            </ColumnTwo>
           </Grid>
-          <ColumnTwo item xs={12} md={6}>
-            <div>{data.phone && `Call: ${data.phone}`}</div>
-            {/* TODO: make it clickable */}
-            <div>4 minutes walking</div>
-            {/* TODO: calculate walking distance */}
-          </ColumnTwo>
         </Grid>
+        <ColumnArrow item xs={1}>
+          <ChevronRight size={20} />
+        </ColumnArrow>
       </Grid>
-      <ColumnArrow item xs={1}>
-        <ChevronRight size={20} />
-      </ColumnArrow>
-    </Grid>
+      <HR />
+    </>
   )
 }
 
@@ -157,10 +183,7 @@ const Facilities = () => {
           <Stack gridGap={2}>
             <HR />
             {data.facilities.map((facility) => (
-              <React.Fragment key={facility.id}>
-                <ListItem data={facility} />
-                <HR />
-              </React.Fragment>
+              <ListItem key={facility.id} data={facility} filter={listFilter} />
             ))}
           </Stack>
         </Grid>
