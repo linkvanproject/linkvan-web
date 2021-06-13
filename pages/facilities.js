@@ -26,7 +26,10 @@ import {
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import Box from '@material-ui/core/Box'
+import Link from '@material-ui/core/Link'
 import getAvailability from 'utils/get-availability'
+
+const formatPhone = (phone) => `+1${phone.replace(/\D/g, '')}`
 
 const FilterBar = styled.div`
   display: flex;
@@ -112,8 +115,13 @@ const ListItem = ({ data, filter }) => {
               </div>
             </Grid>
             <ColumnTwo item xs={12} md={6}>
-              <div>{data.phone && `Call: ${data.phone}`}</div>
-              {/* TODO: make it clickable */}
+              <div>
+                {data.phone && (
+                  <Link href={`tel:${formatPhone(data.phone)}`}>
+                    Call: {data.phone}
+                  </Link>
+                )}
+              </div>
               <div>4 minutes walking</div>
               {/* TODO: calculate walking distance */}
             </ColumnTwo>
