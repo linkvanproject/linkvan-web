@@ -1,35 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import fetcher from 'utils/fetcher'
 import styled from 'styled-components'
-import { useTheme } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Stack from 'stack-styled'
 import Layout from 'components/layout'
 import HR from 'components/hr'
 import NavBar from 'components/nav-bar'
-import {
-  ChevronRight,
-  OverdosePrevention,
-  Shelter,
-  Food,
-  Medical,
-  Hygiene,
-  Technology,
-  Legal,
-  Learning,
-  Phone
-} from 'components/icons'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import Box from '@material-ui/core/Box'
-import Link from '@material-ui/core/Link'
-import getAvailability from 'utils/get-availability'
-
-const formatPhone = (phone) => `+1${phone.replace(/\D/g, '')}`
+import ListItem from 'components/list-item'
 
 const FilterBar = styled.div`
   display: flex;
@@ -41,105 +25,20 @@ const FilterOption = styled(ToggleButton)`
   padding: 6px;
 `
 
-const ColumnArrow = styled(Grid)`
-  text-align: right;
-  align-self: center;
-`
-
-const ListItem = ({ data, filter }) => {
-  const theme = useTheme()
-
-  const ColumnTwo = styled(Grid)`
-    ${theme.breakpoints.up('md')} {
-      text-align: right;
-    }
-  `
-
-  const TagSuccess = styled.span`
-    font-weight: bold;
-    color: ${theme.palette.success.main};
-  `
-
-  const TagError = styled.span`
-    font-weight: bold;
-    color: ${theme.palette.error.main};
-  `
-
-  const TagWarning = styled.span`
-    font-weight: bold;
-    color: ${theme.palette.warning.main};
-  `
-
-  const getIcon = (icon) => {
-    const serviceIcons = {
-      shelter: Shelter,
-      food: Food,
-      medical: Medical,
-      hygiene: Hygiene,
-      technology: Technology,
-      legal: Legal,
-      learning: Learning,
-      overdose_prevention: OverdosePrevention,
-      phone: Phone
-    }
-
-    const Icon = serviceIcons[icon]
-    const StyledIcon = styled(Icon)`
-      margin: 0 5px;
-    `
-    return <StyledIcon key={icon} size={24} />
-  }
-
-  const availability = getAvailability(data.schedule)
-
-  const availabilityLabels = {
-    open: <TagSuccess>OPEN</TagSuccess>,
-    closed: <TagError>CLOSED</TagError>,
-    opening_soon: <TagSuccess>OPENING SOON</TagSuccess>,
-    closing_soon: <TagWarning>CLOSING SOON</TagWarning>
-  }
-
-  if (filter === 'open' && availability !== 'open') return null
-
-  return (
-    <>
-      <Grid container>
-        <Grid item xs={11}>
-          <Grid container>
-            <Grid item xs={12} md={6}>
-              <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
-                {data.name}
-              </Box>
-              <div>
-                {availabilityLabels[availability]} {data.services.map(getIcon)}
-              </div>
-            </Grid>
-            <ColumnTwo item xs={12} md={6}>
-              <div>
-                {data.phone && (
-                  <Link href={`tel:${formatPhone(data.phone)}`}>
-                    Call: {data.phone}
-                  </Link>
-                )}
-              </div>
-              <div>4 minutes walking</div>
-              {/* TODO: calculate walking distance */}
-            </ColumnTwo>
-          </Grid>
-        </Grid>
-        <ColumnArrow item xs={1}>
-          <ChevronRight size={20} />
-        </ColumnArrow>
-      </Grid>
-      <HR />
-    </>
-  )
-}
-
 const Facilities = () => {
   const router = useRouter()
   const [listSort, setListSort] = useState('near')
   const [listFilter, setListFilter] = useState('open')
+  const [userLocation, setUserLacation] = useState(undefined)
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setUserLacation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+    })
+  }, [])
 
   let apiKey = '/api/facilities'
   if (router.query.service) {
@@ -191,7 +90,12 @@ const Facilities = () => {
           <Stack gridGap={2}>
             <HR />
             {data.facilities.map((facility) => (
-              <ListItem key={facility.id} data={facility} filter={listFilter} />
+              <ListItem
+                key={facility.id}
+                data={facility}
+                filter={listFilter}
+                location={userLocation}
+              />
             ))}
           </Stack>
         </Grid>
