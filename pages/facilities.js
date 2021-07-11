@@ -25,12 +25,35 @@ const FilterOption = styled(ToggleButton)`
   padding: 6px;
 `
 
+const sortList = (sort, data) =>
+  sort === 'near' ? sortNear(data) : sortAlphabetic(data)
+
+const sortNear = (list) => {
+  const sortedList = list // TODO: sort by near
+
+  return sortedList
+}
+
+const sortAlphabetic = (list = []) => {
+  const sortedList = [...list].sort((a, b) => {
+    const nameA = a.name.toUpperCase()
+    const nameB = b.name.toUpperCase()
+    if (nameA < nameB) return -1
+    if (nameA > nameB) return 1
+    return 0
+  })
+
+  return sortedList
+}
+
 const Facilities = () => {
   const router = useRouter()
   const [listSort, setListSort] = useState('near')
   const [listFilter, setListFilter] = useState('open')
   const [userLocation, setUserLacation] = useState(undefined)
+  const [facilities, setFacilities] = useState([])
 
+  /* Request user location */
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setUserLacation({
@@ -40,14 +63,26 @@ const Facilities = () => {
     })
   }, [])
 
+  /* Fetch facilities */
   let apiKey = '/api/facilities'
   if (router.query.service) {
     apiKey = `/api/facilities?service=${router.query.service}`
   } else if (router.query.search) {
     apiKey = `/api/facilities?search=${router.query.search}`
   }
-
   const { data, error } = useSWR(apiKey, fetcher)
+
+  /* Handle subsequent data sorting */
+  const handleSorting = (sort) => {
+    if (sort) {
+      setListSort(sort)
+      setFacilities(sortList(sort, data?.facilities))
+    }
+  }
+  /* Handle initial data sorting */
+  useEffect(() => {
+    setFacilities(sortList(listSort, data?.facilities))
+  }, [data])
 
   const getContent = () => {
     if (error) return <Box textAlign="center">failed to load</Box>
@@ -63,7 +98,7 @@ const Facilities = () => {
             <ToggleButtonGroup
               value={listSort}
               exclusive
-              onChange={(_, value) => setListSort(value)}
+              onChange={(_, value) => handleSorting(value)}
             >
               <FilterOption value="near" aria-label="near">
                 Near
@@ -75,7 +110,7 @@ const Facilities = () => {
             <ToggleButtonGroup
               value={listFilter}
               exclusive
-              onChange={(_, value) => setListFilter(value)}
+              onChange={(_, value) => value && setListFilter(value)}
             >
               <FilterOption value="open" aria-label="open">
                 Open
@@ -89,7 +124,7 @@ const Facilities = () => {
         <Grid item xs={12}>
           <Stack gridGap={2}>
             <HR />
-            {data.facilities.map((facility) => (
+            {facilities.map((facility) => (
               <ListItem
                 key={facility.id}
                 data={facility}
