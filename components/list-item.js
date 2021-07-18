@@ -16,17 +16,11 @@ import HR from 'components/hr'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
-import haversine from 'haversine-distance'
 import distanceInWords from 'utils/distance-in-words'
 import getAvailability from 'utils/get-availability'
 
-const getWalkingDistance = (start, end) => {
-  if (!start) return ''
-
-  const startPoint = { latitude: start.lat, longitude: start.lng }
-  const endPoint = { latitude: end.lat, longitude: end.lng }
-
-  const distanceMeters = haversine(startPoint, endPoint) // distance in meters
+const getWalkingDistance = (distanceMeters) => {
+  if (!distanceMeters) return ''
 
   const distanceMinutes = (distanceMeters / 1000) * 12.2 // average 12.2 min/km walking
   return distanceInWords(distanceMinutes)
@@ -94,10 +88,7 @@ const ListItem = ({ data, filter, location }) => {
 
   if (filter === 'open' && availability !== 'open') return null
 
-  const walkingDistance = getWalkingDistance(location, {
-    lat: Number(data.lat),
-    lng: Number(data.long)
-  })
+  const walkingDistance = getWalkingDistance(data.distance)
 
   return (
     <>
