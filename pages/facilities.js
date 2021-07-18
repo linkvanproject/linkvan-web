@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import fetcher from 'utils/fetcher'
 import styled from 'styled-components'
+import haversine from 'haversine-distance'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Stack from 'stack-styled'
@@ -25,11 +26,33 @@ const FilterOption = styled(ToggleButton)`
   padding: 6px;
 `
 
+const addDistance = (list = [], location) => {
+  if (!location) return list
+
+  const startPoint = { latitude: location.lat, longitude: location.lng }
+
+  const formattedList = list.map((item) => ({
+    ...item,
+    distance: haversine(startPoint, {
+      latitude: Number(item.lat),
+      longitude: Number(item.long)
+    })
+  }))
+
+  return formattedList
+}
+
 const sortList = (sort, data) =>
   sort === 'near' ? sortNear(data) : sortAlphabetic(data)
 
 const sortNear = (list) => {
-  const sortedList = list // TODO: sort by near
+  const sortedList = [...list].sort((a, b) => {
+    const distanceA = a.distance
+    const distanceB = b.distance
+    if (distanceA < distanceB) return -1
+    if (distanceA > distanceB) return 1
+    return 0
+  })
 
   return sortedList
 }
@@ -76,13 +99,14 @@ const Facilities = () => {
   const handleSorting = (sort) => {
     if (sort) {
       setListSort(sort)
-      setFacilities(sortList(sort, data?.facilities))
+      setFacilities(sortList(sort, facilities))
     }
   }
   /* Handle initial data sorting */
   useEffect(() => {
-    setFacilities(sortList(listSort, data?.facilities))
-  }, [data])
+    const formattedFacilities = addDistance(data?.facilities, userLocation)
+    setFacilities(sortList(listSort, formattedFacilities))
+  }, [data, userLocation])
 
   const getContent = () => {
     if (error) return <Box textAlign="center">failed to load</Box>
@@ -124,7 +148,7 @@ const Facilities = () => {
         <Grid item xs={12}>
           <Stack gridGap={2}>
             <HR />
-            {facilities.map((facility) => (
+            {facilities?.map((facility) => (
               <ListItem
                 key={facility.id}
                 data={facility}
