@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { useTheme } from '@material-ui/core/styles'
 import {
   ChevronRight,
@@ -16,6 +17,7 @@ import HR from 'components/hr'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
+import ButtonBase from '@material-ui/core/ButtonBase'
 import distanceInWords from 'utils/distance-in-words'
 import getAvailability from 'utils/get-availability'
 
@@ -35,6 +37,13 @@ const ColumnArrow = styled(Grid)`
 
 const ListItem = ({ data, filter, location }) => {
   const theme = useTheme()
+  const router = useRouter()
+
+  const ColumnOne = styled(Grid)`
+    ${theme.breakpoints.up('md')} {
+      text-align: left;
+    }
+  `
 
   const ColumnTwo = styled(Grid)`
     ${theme.breakpoints.up('md')} {
@@ -90,35 +99,40 @@ const ListItem = ({ data, filter, location }) => {
 
   const walkingDistance = getWalkingDistance(data.distance)
 
+  const goTo = (route) => () => router.push(route)
+
   return (
     <>
-      <Grid container>
-        <Grid item xs={11}>
-          <Grid container>
-            <Grid item xs={12} md={6}>
-              <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
-                {data.name}
-              </Box>
-              <div>
-                {availabilityLabels[availability]} {data.services.map(getIcon)}
-              </div>
+      <ButtonBase onClick={goTo(`/facilities/${data.id}`)}>
+        <Grid container>
+          <Grid item xs={11}>
+            <Grid container>
+              <ColumnOne item xs={12} md={8}>
+                <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
+                  {data.name}
+                </Box>
+                <Box fontSize="body2.fontSize">
+                  {availabilityLabels[availability]}{' '}
+                  {data.services.map(getIcon)}
+                </Box>
+              </ColumnOne>
+              <ColumnTwo item xs={12} md={4}>
+                <Box fontSize="body2.fontSize">
+                  {data.phone && (
+                    <Link href={`tel:${formatPhone(data.phone)}`}>
+                      Call: {data.phone}
+                    </Link>
+                  )}
+                </Box>
+                <Box fontSize="body2.fontSize">{walkingDistance}</Box>
+              </ColumnTwo>
             </Grid>
-            <ColumnTwo item xs={12} md={6}>
-              <div>
-                {data.phone && (
-                  <Link href={`tel:${formatPhone(data.phone)}`}>
-                    Call: {data.phone}
-                  </Link>
-                )}
-              </div>
-              <div>{walkingDistance}</div>
-            </ColumnTwo>
           </Grid>
+          <ColumnArrow item xs={1}>
+            <ChevronRight size={20} />
+          </ColumnArrow>
         </Grid>
-        <ColumnArrow item xs={1}>
-          <ChevronRight size={20} />
-        </ColumnArrow>
-      </Grid>
+      </ButtonBase>
       <HR />
     </>
   )
