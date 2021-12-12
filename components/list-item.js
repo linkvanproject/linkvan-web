@@ -79,7 +79,10 @@ const ListItem = ({ data, filter, location }) => {
       phone: Phone
     }
 
-    const Icon = serviceIcons[icon]
+    const Icon = serviceIcons[icon] || null
+
+    if (!Icon) return null
+
     const StyledIcon = styled(Icon)`
       margin: 0 5px;
     `
