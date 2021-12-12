@@ -14,6 +14,16 @@ import Technology from './technology'
 import Virus from './virus'
 import WarmingCooling from './warming-cooling'
 import Phone from './phone'
+import Male from './male'
+import Female from './female'
+import Transgender from './transgender'
+import AgeChildren from './age-children'
+import AgeYouth from './age-youth'
+import AgeAdult from './age-adult'
+import AgeSenior from './age-senior'
+import Call from './call'
+import Website from './website'
+import Directions from './directions'
 
 export {
   Alert,
@@ -31,5 +41,15 @@ export {
   Learning,
   CrisisLines,
   Notices,
-  Phone
+  Phone,
+  Male,
+  Female,
+  Transgender,
+  AgeChildren,
+  AgeYouth,
+  AgeAdult,
+  AgeSenior,
+  Call,
+  Website,
+  Directions
 }

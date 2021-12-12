@@ -1,7 +1,7 @@
 import distanceInWords from './distance-in-words'
 
 test('shows correct walking distance based on distance in minutes', () => {
-  expect(distanceInWords(0.5)).toBe('less than a minute')
+  expect(distanceInWords(0.4)).toBe('less than a minute')
   expect(distanceInWords(1)).toBe('about a minute')
   expect(distanceInWords(12)).toBe('12 minutes')
   expect(distanceInWords(60)).toBe('about an hour')
