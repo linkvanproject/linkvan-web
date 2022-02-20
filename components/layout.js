@@ -22,7 +22,7 @@ const Header = styled.div`
   background: #f8f8f8;
   border-bottom: 2px solid #ccc;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
-  margin-bottom: 20px;
+  margin-bottom: ${({ customCSS }) => customCSS?.marginBottom ?? '20px'};
 `
 
 const Nav = styled.nav`
@@ -81,7 +81,7 @@ const LastUpdated = styled(Typography)`
   color: grey;
 `
 
-const Layout = ({ stats, children }) => {
+const Layout = ({ stats, children, headerStyle }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -91,76 +91,76 @@ const Layout = ({ stats, children }) => {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <div>
-        <Header>
-          <TopAlert severity="error">
-            Please be aware that some services may be impacted due to the
-            ongoing COVID-19 response.
-          </TopAlert>
-          <Container>
-            <Nav>
-              <Grid container>
-                <Grid item xs={12} md={6}>
-                  <LogoBox href="/">
-                    <Logo src="/logo-header.png" alt="Linkvan logo" />
-                    <Home variant="h6">| Home</Home>
-                  </LogoBox>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <SpaceXS />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <form noValidate autoComplete="off">
-                    <SearchBox>
-                      <TextField
-                        id="search-facilities"
-                        label="Search Facilities"
-                        variant="outlined"
-                        size="small"
-                        fullWidth
-                      />
-                      <SearchButton
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                      >
-                        Search
-                      </SearchButton>
-                    </SearchBox>
-                  </form>
-                </Grid>
-                <Grid item xs={12}>
-                  <LastUpdated variant="caption">
-                    Last updated: {formatDate(stats.last_updated)}
-                  </LastUpdated>
-                </Grid>
+      <Header customCSS={headerStyle}>
+        <TopAlert severity="error">
+          Please be aware that some services may be impacted due to the ongoing
+          COVID-19 response.
+        </TopAlert>
+        <Container>
+          <Nav>
+            <Grid container>
+              <Grid item xs={12} md={6}>
+                <LogoBox href="/">
+                  <Logo src="/logo-header.png" alt="Linkvan logo" />
+                  <Home variant="h6">| Home</Home>
+                </LogoBox>
               </Grid>
-            </Nav>
-          </Container>
-        </Header>
-        {children}
-        <Footer>
-          <Link href="/">Sign in</Link>
-          <Separator />
-          <Link href="/">Disclaimer</Link>
-          <Separator />
-          <Link href="/">About us</Link>
-          <Separator />
-          <Link href="/">Sign up</Link>
-        </Footer>
-      </div>
+              <Grid item xs={12} md={3}>
+                <SpaceXS />
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <form noValidate autoComplete="off">
+                  <SearchBox>
+                    <TextField
+                      id="search-facilities"
+                      label="Search Facilities"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                    />
+                    <SearchButton
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                    >
+                      Search
+                    </SearchButton>
+                  </SearchBox>
+                </form>
+              </Grid>
+              <Grid item xs={12}>
+                <LastUpdated variant="caption">
+                  Last updated: {formatDate(stats.last_updated)}
+                </LastUpdated>
+              </Grid>
+            </Grid>
+          </Nav>
+        </Container>
+      </Header>
+      {children}
+      <Footer>
+        <Link href="/">Sign in</Link>
+        <Separator />
+        <Link href="/">Disclaimer</Link>
+        <Separator />
+        <Link href="/">About us</Link>
+        <Separator />
+        <Link href="/">Sign up</Link>
+      </Footer>
     </ThemeProvider>
   )
 }
 
 Layout.propTypes = {
   children: PropTypes.node,
-  stats: PropTypes.object
+  stats: PropTypes.object,
+  headerStyle: PropTypes.object
 }
 
 Layout.defaultProps = {
   children: null,
-  stats: {}
+  stats: {},
+  headerStyle: null
 }
 
 export default Layout
