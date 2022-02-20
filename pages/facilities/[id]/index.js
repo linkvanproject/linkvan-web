@@ -128,7 +128,8 @@ const useFacilitySchedule = () => {
   `
 
   const formatScheduleHour = (schedule = {}) => {
-    if (schedule.availability === 'open') return <TagSuccess>Open</TagSuccess>
+    if (schedule.availability === 'open')
+      return <TagSuccess>Open 24HR</TagSuccess>
     if (schedule.availability === 'closed') return <TagError>Closed</TagError>
     if (schedule.availability === 'set_times' && schedule.times?.length > 0) {
       return schedule.times.map((time) => {
@@ -136,7 +137,7 @@ const useFacilitySchedule = () => {
         const toTime = convertTo12Hour(`${time.to_hour}:${time.to_min}`)
         return (
           <TagDefault key={`${time.from_hour}${time.to_hour}`}>
-            {`${fromTime} to ${toTime}`}
+            {`${fromTime} ~ ${toTime}`}
           </TagDefault>
         )
       })
@@ -154,6 +155,9 @@ const Facility = () => {
 
   const router = useRouter()
   const { data, error } = useSWR(`/api/facilities/${router.query.id}`, fetcher)
+
+  const goTo = (route) => () => router.push(route)
+
   const Title = (props) => (
     <Box fontSize="h5.fontSize" fontWeight="fontWeightBold" mb={2} {...props} />
   )
@@ -241,7 +245,11 @@ const Facility = () => {
               <Map lat={Number(facility.lat)} lng={Number(facility.long)} />
             </Box>
             <Box marginBottom="12px">{facility.address}</Box>
-            <Button variant="outlined" fullWidth>
+            <Button
+              variant="outlined"
+              fullWidth
+              onClick={goTo(`/facilities/${router.query.id}/directions`)}
+            >
               <Box
                 display="flex"
                 flex="1"
