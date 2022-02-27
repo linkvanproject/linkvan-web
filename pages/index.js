@@ -116,7 +116,7 @@ const Home = () => {
           <Grid item xs={12}>
             <TitleBox>
               <Typography variant="h5">
-                What service are you looking for???
+                What service are you looking for?
               </Typography>
               {!!data?.alert && (
                 <>
