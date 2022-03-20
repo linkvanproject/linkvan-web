@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import fetcher from 'utils/fetcher'
+import useNavigatorLocation from 'hooks/use-navigator-location'
 import styled from 'styled-components'
 import haversine from 'haversine-distance'
 import Container from '@material-ui/core/Container'
@@ -70,21 +71,11 @@ const sortAlphabetic = (list = []) => {
 }
 
 const Facilities = () => {
+  const userLocation = useNavigatorLocation()
   const router = useRouter()
   const [listSort, setListSort] = useState('near')
   const [listFilter, setListFilter] = useState('open')
-  const [userLocation, setUserLacation] = useState(undefined)
   const [facilities, setFacilities] = useState([])
-
-  /* Request user location */
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setUserLacation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      })
-    })
-  }, [])
 
   /* Fetch facilities */
   let apiKey = '/api/facilities'
