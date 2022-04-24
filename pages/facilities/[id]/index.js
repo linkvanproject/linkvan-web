@@ -179,10 +179,6 @@ const Facility = () => {
 
     // TODO: use notes from database
     const { facility } = data
-    facility.food_note =
-      'Lorem ipsum dolor sit amet ipsum dolor sit amet ipsum dolor sit amet ipsum dolor sit amet.'
-    facility.shelter_note =
-      'Lorem ipsum dolor sit amet ipsum dolor sit amet ipsum dolor sit amet ipsum dolor sit amet.'
 
     return (
       <>
@@ -195,14 +191,15 @@ const Facility = () => {
             <Box display="flex">
               {facility.welcomes?.map((item) => (
                 <Box
+                  key={item.key}
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
                   paddingRight="18px"
                 >
-                  {getIcon(item, 32)}
+                  {getIcon(item.key, 32)}
                   <Box fontSize="caption.fontSize" paddingTop="6px">
-                    {getLabel(item)}
+                    {getLabel(item.key)}
                   </Box>
                 </Box>
               ))}
@@ -212,27 +209,29 @@ const Facility = () => {
           <StyledPaper elevation={0} variant="outlined">
             <Box display="flex">
               {facility.services?.map((item) => (
-                <Box paddingRight="18px">{getIcon(item, 32)}</Box>
+                <Box key={item.key} paddingRight="18px">
+                  {getIcon(item.key, 32)}
+                </Box>
               ))}
             </Box>
             <Box display="flex" flexDirection="column">
               {facility.services?.map(
                 (item) =>
-                  facility[`${item}_note`] && (
-                    <ServiceNote elevation="2">
+                  item.note && (
+                    <ServiceNote key={item.key} elevation="2">
                       <Box
                         display="flex"
                         flexDirection="row"
                         alignItems="center"
                         paddingRight="18px"
                       >
-                        {getIcon(item, 24)}
+                        {getIcon(item.key, 24)}
                         <Subtitle paddingTop="6px" paddingLeft="9px">
-                          {getLabel(item)}
+                          {getLabel(item.key)}
                         </Subtitle>
                       </Box>
                       <Box fontSize="caption.fontSize" paddingTop="6px">
-                        {facility[`${item}_note`]}
+                        {item.note}
                       </Box>
                     </ServiceNote>
                   )

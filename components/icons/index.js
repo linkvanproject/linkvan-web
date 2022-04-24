@@ -24,6 +24,10 @@ import AgeSenior from './age-senior'
 import Call from './call'
 import Website from './website'
 import Directions from './directions'
+import Walking from './walking'
+import Transit from './transit'
+import Bicycle from './bicycle'
+import Car from './car'
 
 export {
   Alert,
@@ -51,5 +55,9 @@ export {
   AgeSenior,
   Call,
   Website,
-  Directions
+  Directions,
+  Walking,
+  Transit,
+  Bicycle,
+  Car
 }
