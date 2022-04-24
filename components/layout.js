@@ -6,17 +6,12 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
-import Alert from '@material-ui/lab/Alert'
 import Link from '@material-ui/core/Link'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import formatDate from 'utils/format-date'
 import theme from '../theme'
-
-const TopAlert = styled(Alert)`
-  justify-content: center;
-`
 
 const Header = styled.div`
   background: #f8f8f8;
@@ -92,10 +87,6 @@ const Layout = ({ stats, children, headerStyle }) => {
         />
       </Head>
       <Header customCSS={headerStyle}>
-        <TopAlert severity="error">
-          Please be aware that some services may be impacted due to the ongoing
-          COVID-19 response.
-        </TopAlert>
         <Container>
           <Nav>
             <Grid container>
