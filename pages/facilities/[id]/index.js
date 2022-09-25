@@ -21,6 +21,7 @@ import TableRow from '@material-ui/core/TableRow'
 import Layout from 'components/layout'
 import NavBar from 'components/nav-bar'
 import Map from 'components/map'
+import PageTitle from 'components/page-title'
 import {
   ChevronRight,
   Male,
@@ -158,10 +159,6 @@ const Facility = () => {
 
   const goTo = (route) => () => router.push(route)
 
-  const Title = (props) => (
-    <Box fontSize="h5.fontSize" fontWeight="fontWeightBold" mb={2} {...props} />
-  )
-
   const SectionTitle = (props) => (
     <Box fontSize="h6.fontSize" color="grey.700" mb={1} {...props} />
   )
@@ -183,7 +180,7 @@ const Facility = () => {
     return (
       <>
         <Grid item xs={12}>
-          <Title>{facility.name}</Title>
+          <PageTitle>{facility.name}</PageTitle>
         </Grid>
         <Grid item xs={12}>
           <SectionTitle>Welcomes</SectionTitle>

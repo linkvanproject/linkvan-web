@@ -212,7 +212,7 @@ const Home = () => {
               <CategoryButton
                 title="Crisis Lines"
                 icon={<CrisisLines />}
-                onClick={goTo('')}
+                onClick={goTo('/crisis')}
               />
               <CategoryButton
                 title="Notices"
