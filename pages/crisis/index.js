@@ -1,4 +1,6 @@
 import React from 'react'
+import useSWR from 'swr'
+import fetcher from 'utils/fetcher'
 import Head from 'next/head'
 import Stack from 'stack-styled'
 import Container from '@material-ui/core/Container'
@@ -127,7 +129,7 @@ const lines = [
 ]
 
 const Crisis = () => {
-  const data = {}
+  const { data } = useSWR('/api/home', fetcher)
 
   return (
     <Layout stats={data?.site_stats}>
