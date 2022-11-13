@@ -134,7 +134,7 @@ const Layout = ({ stats, children, headerStyle }) => {
         <Separator />
         <Link href="/">Disclaimer</Link>
         <Separator />
-        <Link href="/">About us</Link>
+        <Link href="/about-us">About us</Link>
         <Separator />
         <Link href="/">Sign up</Link>
       </Footer>
