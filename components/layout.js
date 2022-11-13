@@ -132,7 +132,7 @@ const Layout = ({ stats, children, headerStyle }) => {
       <Footer>
         <Link href="/">Sign in</Link>
         <Separator />
-        <Link href="/">Disclaimer</Link>
+        <Link href="/disclaimer">Disclaimer</Link>
         <Separator />
         <Link href="/about-us">About us</Link>
         <Separator />

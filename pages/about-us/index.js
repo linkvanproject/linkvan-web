@@ -43,8 +43,6 @@ const AboutUs = () => {
     }
   `
 
-  console.log({theme})
-
   return (
     <Layout stats={data?.site_stats}>
       <Head>
