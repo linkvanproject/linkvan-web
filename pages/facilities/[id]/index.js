@@ -42,7 +42,8 @@ import {
   Phone,
   Call,
   Website,
-  Directions
+  Directions,
+  Loading
 } from 'components/icons'
 
 const StyledPaper = styled(Paper)`
@@ -168,9 +169,9 @@ const Facility = () => {
   )
 
   const getContent = () => {
-    if (error) return <Box textAlign="center">failed to load</Box>
+    if (error) return <Box textAlign="center" flexGrow={1}>failed to load</Box>
 
-    if (!data) return <Box textAlign="center">loading...</Box>
+    if (!data) return <Box textAlign="center" flexGrow={1}><Loading /></Box>
 
     if (!data.facility) return <div>Facility not found.</div>
 

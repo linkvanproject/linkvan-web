@@ -16,6 +16,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import Box from '@material-ui/core/Box'
 import ListItem from 'components/list-item'
+import { Loading } from 'components/icons'
 
 const FilterBar = styled.div`
   display: flex;
@@ -100,9 +101,9 @@ const Facilities = () => {
   }, [data, userLocation])
 
   const getContent = () => {
-    if (error) return <Box textAlign="center">failed to load</Box>
+    if (error) return <Box textAlign="center" flexGrow={1}>failed to load</Box>
 
-    if (!data) return <Box textAlign="center">loading...</Box>
+    if (!data) return <Box textAlign="center" flexGrow={1}><Loading /></Box>
 
     if (data.facilities.length <= 0) return <div>No facilities found.</div>
 
