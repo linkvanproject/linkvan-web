@@ -1,6 +1,7 @@
 import React from 'react'
-import Head from 'next/head'
 import PropTypes from 'prop-types'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -77,6 +78,16 @@ const LastUpdated = styled(Typography)`
 `
 
 const Layout = ({ stats, children, headerStyle }) => {
+  const router = useRouter()
+
+  const handleSearch = (event) => {
+    event.preventDefault()
+    const keyword = event.target.search.value
+    if (keyword) {
+      router.push(`/facilities?search=${keyword}`)
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -100,16 +111,17 @@ const Layout = ({ stats, children, headerStyle }) => {
                 <SpaceXS />
               </Grid>
               <Grid item xs={12} md={3}>
-                <form noValidate autoComplete="off">
+                <form noValidate autoComplete="off" onSubmit={handleSearch}>
                   <SearchBox>
                     <TextField
-                      id="search-facilities"
                       label="Search Facilities"
                       variant="outlined"
                       size="small"
                       fullWidth
+                      name="search"
                     />
                     <SearchButton
+                      type="submit"
                       variant="contained"
                       color="primary"
                       disableElevation
