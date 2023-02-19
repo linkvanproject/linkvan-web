@@ -28,6 +28,7 @@ import Walking from './walking'
 import Transit from './transit'
 import Bicycle from './bicycle'
 import Car from './car'
+import Loading from './loading'
 
 export {
   Alert,
@@ -59,5 +60,6 @@ export {
   Walking,
   Transit,
   Bicycle,
-  Car
+  Car,
+  Loading
 }

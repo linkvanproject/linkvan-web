@@ -15,7 +15,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Layout from 'components/layout'
-import { Walking, Transit, Bicycle, Car } from 'components/icons'
+import { Walking, Transit, Bicycle, Car, Loading } from 'components/icons'
 
 const TravelModes = styled(ButtonGroup)`
   position: absolute;
@@ -99,9 +99,9 @@ const Directions = () => {
       <Head>
         <title>Linkvan</title>
       </Head>
-      {error && <Box textAlign="center">failed to load</Box>}
-      {!data && <Box textAlign="center">loading...</Box>}
-      {!data?.facility && <div>Facility not found.</div>}
+      {error && <Box textAlign="center" flexGrow={1}>failed to load</Box>}
+      {!data && <Box textAlign="center" flexGrow={1}><Loading /></Box>}
+      {data && !data?.facility && <div>Facility not found.</div>}
       {isLoaded && data ? (
         <GoogleMap
           key={travelMode}
