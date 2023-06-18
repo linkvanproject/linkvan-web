@@ -79,7 +79,7 @@ const ListItem = ({ data, filter, location }) => {
       phone: Phone
     }
 
-    const Icon = serviceIcons[icon] || null
+    const Icon = serviceIcons[icon.key] || null
 
     if (!Icon) return null
 
@@ -104,6 +104,16 @@ const ListItem = ({ data, filter, location }) => {
 
   const goTo = (route) => () => router.push(route)
 
+  const sortByServices = (a, b) => {
+    const nameA = a.key.toLowerCase()
+    const nameB = b.key.toLowerCase()
+    const order = ['overdose_prevention', 'shelter', 'food', 'medical', 'hygiene', 'technology', 'legal', 'learning', 'phone']
+
+    if (!order.includes(nameA)) return 1
+    
+    return order.indexOf(nameA) < order.indexOf(nameB) ? -1 : 1
+  }
+
   return (
     <>
       <ButtonBase onClick={goTo(`/facilities/${data.id}`)}>
@@ -114,9 +124,13 @@ const ListItem = ({ data, filter, location }) => {
                 <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
                   {data.name}
                 </Box>
-                <Box fontSize="body2.fontSize">
-                  {availabilityLabels[availability]}{' '}
-                  {data.services.map(getIcon)}
+                <Box fontSize="body2.fontSize" display="flex" alignItems="center" marginTop={1}>
+                  <Box marginRight={1}>{availabilityLabels[availability]}{' '}</Box>
+                  {data
+                    .services
+                    .sort(sortByServices)
+                    .map(getIcon)
+                  }
                 </Box>
               </ColumnOne>
               <ColumnTwo item xs={12} md={4}>
