@@ -175,7 +175,6 @@ const Facility = () => {
 
     if (!data.facility) return <div>Facility not found.</div>
 
-    // TODO: use notes from database
     const { facility } = data
 
     return (
