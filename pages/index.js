@@ -217,7 +217,7 @@ const Home = () => {
               <CategoryButton
                 title="Notices"
                 icon={<Notices />}
-                onClick={goTo('')}
+                onClick={goTo('/notices')}
               />
             </Stack>
           </Grid>
