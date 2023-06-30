@@ -169,12 +169,14 @@ const Home = () => {
                 <CategoryButton
                   title="Warming Center"
                   icon={<WarmingCooling />}
+                  onClick={goTo('/notices/warming-center')}
                 />
               )}
               {!!data?.notices?.cooling_center && (
                 <CategoryButton
                   title="Cooling Center"
                   icon={<WarmingCooling />}
+                  onClick={goTo('/notices/cooling-center')}
                 />
               )}
               <HR />
