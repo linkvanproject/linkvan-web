@@ -154,7 +154,11 @@ const Home = () => {
           <Grid item xs={12}>
             <Stack gridGap={3}>
               {!!data?.notices?.covid19 && (
-                <CategoryButton title="COVID-19" icon={<Virus />} />
+                <CategoryButton
+                  title="COVID-19"
+                  icon={<Virus />}
+                  onClick={goTo('/notices/covid19')}
+                />
               )}
               <CategoryButton
                 title="Overdose Prevention"
@@ -217,7 +221,7 @@ const Home = () => {
               <CategoryButton
                 title="Notices"
                 icon={<Notices />}
-                onClick={goTo('/notices')}
+                onClick={goTo('/notices?type=general')}
               />
             </Stack>
           </Grid>

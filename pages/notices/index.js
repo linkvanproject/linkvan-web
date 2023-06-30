@@ -33,8 +33,8 @@ const Notices = () => {
   const goTo = (route) => () => router.push(route)
 
   /* Fetch notices */
-  const apiKey = '/api/notices'
-  const { data, error } = useSWR(apiKey, fetcher)
+  const apiKey = `/api/notices?type=${router.query.type}`
+  const { data, error } = useSWR(router.query.type ? apiKey : null, fetcher)
 
   const getContent = () => {
     if (error)

@@ -1,14 +1,16 @@
 import React from 'react'
 import useSWR from 'swr'
-import { useRouter } from 'next/router'
 import fetcher from 'utils/fetcher'
 import NoticePage from 'components/notice-page'
 
 const Notice = () => {
-  const router = useRouter()
-
+  // first get notices for covid19
+  const noticesResponse = useSWR(`/api/notices?type=covid19`, fetcher)
+  // then get the data for the one notice
   const { data, error } = useSWR(
-    router.query.id ? `/api/notices/${router.query.id}` : null,
+    noticesResponse.data
+      ? `/api/notices/${noticesResponse.data.notices[0].slug}`
+      : null,
     fetcher
   )
 
