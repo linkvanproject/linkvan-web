@@ -21,6 +21,10 @@ import ButtonBase from '@material-ui/core/ButtonBase'
 import distanceInWords from 'utils/distance-in-words'
 import getAvailability from 'utils/get-availability'
 
+const StyledIcon = styled('div')`
+  margin: 0 5px;
+`
+
 const getWalkingDistance = (distanceMeters) => {
   if (!distanceMeters) return ''
 
@@ -83,10 +87,7 @@ const ListItem = ({ data, filter, location }) => {
 
     if (!Icon) return null
 
-    const StyledIcon = styled(Icon)`
-      margin: 0 5px;
-    `
-    return <StyledIcon key={icon} size={24} />
+    return <Icon key={icon.key} size={24} />
   }
 
   const availability = getAvailability(data.schedule)
@@ -107,10 +108,20 @@ const ListItem = ({ data, filter, location }) => {
   const sortByServices = (a, b) => {
     const nameA = a.key.toLowerCase()
     const nameB = b.key.toLowerCase()
-    const order = ['overdose_prevention', 'shelter', 'food', 'medical', 'hygiene', 'technology', 'legal', 'learning', 'phone']
+    const order = [
+      'overdose_prevention',
+      'shelter',
+      'food',
+      'medical',
+      'hygiene',
+      'technology',
+      'legal',
+      'learning',
+      'phone'
+    ]
 
     if (!order.includes(nameA)) return 1
-    
+
     return order.indexOf(nameA) < order.indexOf(nameB) ? -1 : 1
   }
 
@@ -124,13 +135,16 @@ const ListItem = ({ data, filter, location }) => {
                 <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
                   {data.name}
                 </Box>
-                <Box fontSize="body2.fontSize" display="flex" alignItems="center" marginTop={1}>
-                  <Box marginRight={1}>{availabilityLabels[availability]}{' '}</Box>
-                  {data
-                    .services
-                    .sort(sortByServices)
-                    .map(getIcon)
-                  }
+                <Box
+                  fontSize="body2.fontSize"
+                  display="flex"
+                  alignItems="center"
+                  marginTop={1}
+                >
+                  <Box marginRight={1}>{availabilityLabels[availability]} </Box>
+                  {data.services.sort(sortByServices).map((icon) => (
+                    <StyledIcon key={icon.key}>{getIcon(icon)}</StyledIcon>
+                  ))}
                 </Box>
               </ColumnOne>
               <ColumnTwo item xs={12} md={4}>

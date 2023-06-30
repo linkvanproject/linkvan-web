@@ -101,9 +101,19 @@ const Facilities = () => {
   }, [data, userLocation])
 
   const getContent = () => {
-    if (error) return <Box textAlign="center" flexGrow={1}>failed to load</Box>
+    if (error)
+      return (
+        <Box textAlign="center" flexGrow={1}>
+          failed to load
+        </Box>
+      )
 
-    if (!data) return <Box textAlign="center" flexGrow={1}><Loading /></Box>
+    if (!data)
+      return (
+        <Box textAlign="center" flexGrow={1}>
+          <Loading />
+        </Box>
+      )
 
     if (data.facilities.length <= 0) return <div>No facilities found.</div>
 
