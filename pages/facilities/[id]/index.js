@@ -139,7 +139,7 @@ const useFacilitySchedule = () => {
         const toTime = convertTo12Hour(`${time.to_hour}:${time.to_min}`)
         return (
           <TagDefault key={`${time.from_hour}${time.to_hour}`}>
-            {`${fromTime} ~ ${toTime}`}
+            {`${fromTime} - ${toTime}`}
           </TagDefault>
         )
       })
@@ -169,9 +169,19 @@ const Facility = () => {
   )
 
   const getContent = () => {
-    if (error) return <Box textAlign="center" flexGrow={1}>failed to load</Box>
+    if (error)
+      return (
+        <Box textAlign="center" flexGrow={1}>
+          failed to load
+        </Box>
+      )
 
-    if (!data) return <Box textAlign="center" flexGrow={1}><Loading /></Box>
+    if (!data)
+      return (
+        <Box textAlign="center" flexGrow={1}>
+          <Loading />
+        </Box>
+      )
 
     if (!data.facility) return <div>Facility not found.</div>
 
