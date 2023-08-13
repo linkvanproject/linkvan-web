@@ -5,19 +5,19 @@ import { useRouter } from 'next/router'
 import fetcher from 'utils/fetcher'
 import convertTo12Hour from 'utils/convert-to-12-hour'
 import formatDate from 'utils/format-date'
-import styled from 'styled-components'
-import { useTheme } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
-import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import Link from '@material-ui/core/Link'
-import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableRow from '@material-ui/core/TableRow'
+import styled from '@emotion/styled'
+import { useTheme } from '@mui/material/styles'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableRow from '@mui/material/TableRow'
 import Layout from 'components/layout'
 import NavBar from 'components/nav-bar'
 import Map from 'components/map'
@@ -225,7 +225,7 @@ const Facility = () => {
               {facility.services?.map(
                 (item) =>
                   item.note && (
-                    <ServiceNote key={item.key} elevation="2">
+                    <ServiceNote key={item.key} elevation={2}>
                       <Box
                         display="flex"
                         flexDirection="row"

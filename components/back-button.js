@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import Link from '@material-ui/core/Link'
-import { useTheme } from '@material-ui/core/styles'
+import styled from '@emotion/styled'
+import Link from '@mui/material/Link'
+import { useTheme } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import { ChevronLeft } from 'components/icons'
 

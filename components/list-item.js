@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import {
   ChevronRight,
   OverdosePrevention,
@@ -14,10 +14,10 @@ import {
   Phone
 } from 'components/icons'
 import HR from 'components/hr'
-import Link from '@material-ui/core/Link'
-import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
-import ButtonBase from '@material-ui/core/ButtonBase'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import ButtonBase from '@mui/material/ButtonBase'
 import distanceInWords from 'utils/distance-in-words'
 import getAvailability from 'utils/get-availability'
 

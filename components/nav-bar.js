@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
-import styled from 'styled-components'
-import Breadcrumbs from '@material-ui/core/Breadcrumbs'
-import Link from '@material-ui/core/Link'
+import styled from '@emotion/styled'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Link from '@mui/material/Link'
 import BackButton from 'components/back-button'
 
 const Container = styled.div`
