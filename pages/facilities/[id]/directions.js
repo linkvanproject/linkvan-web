@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import useSWR from 'swr'
 import fetcher from 'utils/fetcher'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import useNavigatorLocation from 'hooks/use-navigator-location'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -11,9 +11,9 @@ import {
   DirectionsService,
   DirectionsRenderer
 } from '@react-google-maps/api'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
 import Layout from 'components/layout'
 import { Walking, Transit, Bicycle, Car, Loading } from 'components/icons'
 
@@ -99,8 +99,16 @@ const Directions = () => {
       <Head>
         <title>Linkvan</title>
       </Head>
-      {error && <Box textAlign="center" flexGrow={1}>failed to load</Box>}
-      {!data && <Box textAlign="center" flexGrow={1}><Loading /></Box>}
+      {error && (
+        <Box textAlign="center" flexGrow={1}>
+          failed to load
+        </Box>
+      )}
+      {!data && (
+        <Box textAlign="center" flexGrow={1}>
+          <Loading />
+        </Box>
+      )}
       {data && !data?.facility && <div>Facility not found.</div>}
       {isLoaded && data ? (
         <GoogleMap

@@ -1,6 +1,6 @@
 import React from 'react'
-import Box from '@material-ui/core/Box'
-import Link from '@material-ui/core/Link'
+import Box from '@mui/material/Box'
+import Link from '@mui/material/Link'
 
 const Title = (props) => (
   <Box fontSize="h6.fontSize" fontWeight="fontWeightBold" mb={2} {...props} />
