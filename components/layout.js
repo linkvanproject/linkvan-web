@@ -142,11 +142,9 @@ const Layout = ({ stats, children, headerStyle }) => {
       </Header>
       {children}
       <Footer>
-        <Separator />
         <Link href="/disclaimer">Disclaimer</Link>
         <Separator />
         <Link href="/about-us">About us</Link>
-        <Separator />
       </Footer>
     </ThemeProvider>
   )
