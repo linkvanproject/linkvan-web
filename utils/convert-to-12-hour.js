@@ -1,9 +1,13 @@
-const convertTo12Hour = (time) => {
-  let result = time.split(':')
-  const ampm = Number(result[0]) <= 12 ? 'am' : 'pm'
-  result[0] = String(Number(result[0]) % 12)
-  result = result.map((time) => time.padStart(2, '0'))
-  return `${result.join(':')}${ampm}`
+const convertTo12Hour = (h, m) => {
+  if (m === 0){
+    if (h === 0) return 'Midnight'
+    if (h === 12) return 'Noon'
+  }
+ 
+  const ampm = h >= 12 & h <= 23 ? 'pm' : 'am'
+  const hour = (h % 12 === 0) ? '12' : String(h % 12)
+  const min = String(m).padStart(2, '0')
+  return `${hour}:${min}${ampm}`
 }
 
 export default convertTo12Hour
