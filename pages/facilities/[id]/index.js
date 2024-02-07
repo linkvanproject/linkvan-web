@@ -134,15 +134,18 @@ const useFacilitySchedule = () => {
       return <TagSuccess>Open 24HR</TagSuccess>
     if (schedule.availability === 'closed') return <TagError>Closed</TagError>
     if (schedule.availability === 'set_times' && schedule.times?.length > 0) {
-      return schedule.times.map((time) => {
-        const fromTime = convertTo12Hour(time.from_hour, time.from_min)
-        const toTime = convertTo12Hour(time.to_hour, time.to_min)
-        return (
-          <TagDefault key={`${time.from_hour}${time.to_hour}`}>
-            {`${fromTime} - ${toTime}`}
-          </TagDefault>
-        )
-      })
+      return schedule.times
+        .sort((a, b) => a.from_hour < b.from_hour ? -1 : 1)
+        .map((time) => {
+          const fromTime = convertTo12Hour(time.from_hour, time.from_min)
+          const toTime = convertTo12Hour(time.to_hour, time.to_min)
+          return (
+            <TagDefault key={`${time.from_hour}${time.to_hour}`}>
+              {`${fromTime} - ${toTime}`}
+            </TagDefault>
+          )
+        }
+      )
     }
     return '-'
   }
