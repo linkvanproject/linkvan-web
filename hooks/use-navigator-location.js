@@ -10,6 +10,12 @@ const useNavigatorLocation = () => {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       })
+
+      // Saving here so we can get it in the "fetcher" function
+      sessionStorage.setItem('userLocation', JSON.stringify({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }))
     })
   }, [])
 
