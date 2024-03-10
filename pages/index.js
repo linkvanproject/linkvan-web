@@ -32,7 +32,8 @@ import {
   Legal,
   Learning,
   CrisisLines,
-  Notices
+  Notices,
+  // WaterFountain
 } from 'components/icons'
 
 const TitleBox = styled.div`
@@ -165,6 +166,12 @@ const Home = () => {
                 icon={<OverdosePrevention />}
                 onClick={goTo('/facilities?service=overdose_prevention')}
               />
+              {/* TODO: add condition to display button */}
+              {/* <CategoryButton
+                title="Water Fountains"
+                icon={<WaterFountain />}
+                onClick={goTo('/facilities?service=water_fountain')}
+              /> */}
               {!!data?.notices?.warming_center && (
                 <CategoryButton
                   title="Warming Center"

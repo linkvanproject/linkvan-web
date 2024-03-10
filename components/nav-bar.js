@@ -3,16 +3,13 @@ import styled from '@emotion/styled'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
 import BackButton from 'components/back-button'
+import getServiceLabel from 'utils/get-service-label'
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-`
-
-const Current = styled.label`
-  text-transform: capitalize;
 `
 
 const NavBar = () => {
@@ -24,7 +21,7 @@ const NavBar = () => {
       {!!router.query.service && (
         <Breadcrumbs aria-label="breadcrumb">
           <Link href="/">Facilities</Link>
-          <Current>{router.query.service}</Current>
+          <label>{getServiceLabel(router.query.service)}</label>
         </Breadcrumbs>
       )}
     </Container>

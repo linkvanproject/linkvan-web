@@ -29,6 +29,7 @@ import Transit from './transit'
 import Bicycle from './bicycle'
 import Car from './car'
 import Loading from './loading'
+import WaterFountain from './water-fountain'
 
 export {
   Alert,
@@ -61,5 +62,6 @@ export {
   Transit,
   Bicycle,
   Car,
-  Loading
+  Loading,
+  WaterFountain
 }

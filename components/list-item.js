@@ -11,7 +11,8 @@ import {
   Technology,
   Legal,
   Learning,
-  Phone
+  Phone,
+  WaterFountain
 } from 'components/icons'
 import HR from 'components/hr'
 import Link from '@mui/material/Link'
@@ -70,6 +71,7 @@ const ListItem = ({ data, filter, location }) => {
     color: ${theme.palette.warning.main};
   `
 
+  // TODO: remove duplicated function in other files
   const getIcon = (icon) => {
     const serviceIcons = {
       shelter: Shelter,
@@ -80,7 +82,8 @@ const ListItem = ({ data, filter, location }) => {
       legal: Legal,
       learning: Learning,
       overdose_prevention: OverdosePrevention,
-      phone: Phone
+      phone: Phone,
+      water_fountain: WaterFountain
     }
 
     const Icon = serviceIcons[icon.key] || null
@@ -117,7 +120,8 @@ const ListItem = ({ data, filter, location }) => {
       'technology',
       'legal',
       'learning',
-      'phone'
+      'phone',
+      'water_fountain'
     ]
 
     if (!order.includes(nameA)) return 1

@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import fetcher from 'utils/fetcher'
 import convertTo12Hour from 'utils/convert-to-12-hour'
+import getServiceLabel from 'utils/get-service-label'
 import formatDate from 'utils/format-date'
 import styled from '@emotion/styled'
 import { useTheme } from '@mui/material/styles'
@@ -43,7 +44,8 @@ import {
   Call,
   Website,
   Directions,
-  Loading
+  Loading,
+  WaterFountain
 } from 'components/icons'
 
 const StyledPaper = styled(Paper)`
@@ -81,35 +83,13 @@ const getIcon = (icon, size) => {
     legal: Legal,
     learning: Learning,
     overdose_prevention: OverdosePrevention,
-    phone: Phone
+    phone: Phone,
+    water_fountain: WaterFountain
   }
 
   const Icon = icons[icon] || null
   if (icons[icon]) return <Icon key={icon} size={size} />
   return Icon
-}
-
-const getLabel = (label) => {
-  const labels = {
-    male: 'Male',
-    female: 'Female',
-    transgender: 'Transgender',
-    children: 'Children',
-    youth: 'Youth',
-    adult: 'Adult',
-    senior: 'Senior',
-    shelter: 'Shelter',
-    food: 'Food',
-    medical: 'Medical',
-    hygiene: 'Hygiene',
-    technology: 'Technology',
-    legal: 'Legal',
-    learning: 'Learning',
-    overdose_prevention: 'Overdose Prevention',
-    phone: 'Phone'
-  }
-
-  return labels[label] || ''
 }
 
 const useFacilitySchedule = () => {
@@ -209,7 +189,7 @@ const Facility = () => {
                 >
                   {getIcon(item.key, 32)}
                   <Box fontSize="caption.fontSize" paddingTop="6px">
-                    {getLabel(item.key)}
+                    {getServiceLabel(item.key)}
                   </Box>
                 </Box>
               ))}
@@ -237,7 +217,7 @@ const Facility = () => {
                       >
                         {getIcon(item.key, 24)}
                         <Subtitle paddingTop="6px" paddingLeft="9px">
-                          {getLabel(item.key)}
+                          {getServiceLabel(item.key)}
                         </Subtitle>
                       </Box>
                       <Box fontSize="caption.fontSize" paddingTop="6px">
