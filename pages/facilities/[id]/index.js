@@ -23,6 +23,7 @@ import Layout from 'components/layout'
 import NavBar from 'components/nav-bar'
 import Map from 'components/map'
 import PageTitle from 'components/page-title'
+import PreWrap from 'components/pre-wrap'
 import {
   ChevronRight,
   Male,
@@ -356,7 +357,7 @@ const Facility = () => {
           </StyledTableContainer>
           <SectionTitle>Notes</SectionTitle>
           <StyledPaper elevation={0} variant="outlined">
-            {facility.notes}
+            <PreWrap>{facility.notes}</PreWrap>
           </StyledPaper>
           <SectionTitle>Last updated</SectionTitle>
           <StyledPaper elevation={0} variant="outlined">
