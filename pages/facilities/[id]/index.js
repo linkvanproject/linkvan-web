@@ -277,7 +277,7 @@ const Facility = () => {
                   </TableCell>
                   <TableCell>
                     <Link
-                      href={`https://${facility.website}`}
+                      href={facility.website}
                       target="_blank"
                       rel="noreferrer"
                     >
