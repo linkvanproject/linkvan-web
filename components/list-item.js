@@ -29,7 +29,8 @@ const StyledIcon = styled('div')`
 const getWalkingDistance = (distanceMeters) => {
   if (!distanceMeters) return ''
 
-  const distanceMinutes = (distanceMeters / 1000) * 12.2 // average 12.2 min/km walking
+  let distanceMinutes = (distanceMeters / 1000) * 12.2 // average 12.2 min/km walking
+  distanceMinutes = distanceMinutes * 1.5 // add 50% to be closer to Google Maps results
   return distanceInWords(distanceMinutes)
 }
 
