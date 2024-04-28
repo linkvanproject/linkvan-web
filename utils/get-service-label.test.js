@@ -6,5 +6,5 @@ test('return service label based on label key', () => {
   expect(getServiceLabel('senior')).toBe('Senior')
   expect(getServiceLabel('shelter')).toBe('Shelter')
   expect(getServiceLabel('overdose_prevention')).toBe('Overdose Prevention')
-  expect(getServiceLabel('water_fountain')).toBe('Water Fountain')
+  expect(getServiceLabel('water_fountain')).toBe('Water Fountains')
 })
