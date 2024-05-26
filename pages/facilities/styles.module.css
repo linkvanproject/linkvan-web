@@ -1,0 +1,9 @@
+.filterBar {
+  display: flex;
+  justify-content: space-around;
+}
+
+.filterOption {
+  width: 65px;
+  padding: 6px;
+}

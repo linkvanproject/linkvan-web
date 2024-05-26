@@ -16,7 +16,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import Stack from 'stack-styled'
+import Stack from 'components/stack'
 import Layout from 'components/layout'
 import HR from 'components/hr'
 import {
