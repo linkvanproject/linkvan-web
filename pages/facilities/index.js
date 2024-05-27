@@ -4,11 +4,9 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import fetcher from 'utils/fetcher'
 import useNavigatorLocation from 'hooks/use-navigator-location'
-import styled from '@emotion/styled'
 import haversine from 'haversine-distance'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import Stack from 'stack-styled'
 import Layout from 'components/layout'
 import HR from 'components/hr'
 import NavBar from 'components/nav-bar'
@@ -17,16 +15,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Box from '@mui/material/Box'
 import ListItem from 'components/list-item'
 import { Loading } from 'components/icons'
-
-const FilterBar = styled.div`
-  display: flex;
-  justify-content: space-around;
-`
-
-const FilterOption = styled(ToggleButton)`
-  width: 65px;
-  padding: 6px;
-`
+import Stack from 'components/stack'
+import styles from './styles.module.css'
 
 const addDistance = (list = [], location) => {
   if (!location) return list
@@ -120,32 +110,32 @@ const Facilities = () => {
     return (
       <>
         <Grid item xs={12}>
-          <FilterBar>
+          <div className={styles.filterBar}>
             <ToggleButtonGroup
               value={listSort}
               exclusive
               onChange={(_, value) => handleSorting(value)}
             >
-              <FilterOption value="near" aria-label="near">
+              <ToggleButton className={styles.filterOption} value="near" aria-label="near">
                 Near
-              </FilterOption>
-              <FilterOption value="alphabetic" aria-label="alphabetic">
+              </ToggleButton>
+              <ToggleButton className={styles.filterOption} value="alphabetic" aria-label="alphabetic">
                 A-Z
-              </FilterOption>
+              </ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup
               value={listFilter}
               exclusive
               onChange={(_, value) => value && setListFilter(value)}
             >
-              <FilterOption value="open" aria-label="open">
+              <ToggleButton className={styles.filterOption} value="open" aria-label="open">
                 Open
-              </FilterOption>
-              <FilterOption value="all" aria-label="all">
+              </ToggleButton>
+              <ToggleButton className={styles.filterOption} value="all" aria-label="all">
                 All
-              </FilterOption>
+              </ToggleButton>
             </ToggleButtonGroup>
-          </FilterBar>
+          </div>
         </Grid>
         <Grid item xs={12}>
           <Stack gridGap={2}>
