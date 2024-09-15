@@ -371,7 +371,7 @@ const Facility = () => {
   return (
     <Layout stats={data?.site_stats}>
       <Head>
-        <title>Linkvan</title>
+        <title>Linkvan | Facilities | {data?.facility?.name}</title>
       </Head>
       <Container maxWidth="md">
         <Grid container>

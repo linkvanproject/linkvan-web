@@ -82,7 +82,7 @@ const Notices = () => {
   return (
     <Layout stats={data?.site_stats}>
       <Head>
-        <title>Linkvan</title>
+        <title>Linkvan | Notices</title>
       </Head>
       <Container maxWidth="md">
         <Grid container>
