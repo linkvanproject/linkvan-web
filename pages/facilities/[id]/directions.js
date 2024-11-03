@@ -97,7 +97,7 @@ const Directions = () => {
   return (
     <Layout stats={data?.site_stats} headerStyle={{ marginBottom: 0 }}>
       <Head>
-        <title>Linkvan</title>
+        <title>Linkvan | Facilities | {data?.facility?.name} | Directions</title>
       </Head>
       {error && (
         <Box textAlign="center" flexGrow={1}>

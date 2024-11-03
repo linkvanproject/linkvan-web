@@ -16,6 +16,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+import Link from '@mui/material/Link'
 import Stack from 'components/stack'
 import Layout from 'components/layout'
 import HR from 'components/hr'
@@ -51,7 +52,7 @@ const AlertContent = styled(Alert)`
   padding: 0px 10px;
 `
 
-const Category = styled(ButtonBase)`
+const Category = styled(Link)`
   border: 1px solid #ccc;
   display: flex;
   flex-direction: row;
@@ -59,6 +60,7 @@ const Category = styled(ButtonBase)`
   width: 100%;
   padding: 8px 12px;
   border-radius: 4px;
+  text-decoration: none;
 `
 
 const Icon = styled.div`
@@ -70,25 +72,29 @@ const Title = styled.div`
   flex-grow: 1;
   text-align: left;
   padding: 0px 12px;
-  font-size: ${({ fontSize }) => fontSize};
-  font-weight: ${({ fontWeight }) => fontWeight};
 `
 
 const IconChevronRight = styled(ChevronRight)`
   flex-grow: 0;
 `
 
-const CategoryButton = ({ title, icon, onClick }) => {
+const CategoryButton = ({ title, icon, url }) => {
   const theme = useTheme()
 
   const {
-    typography: { body1, fontWeightBold }
+    typography: { body1, fontWeightBold },
+    palette: { text }
   } = theme
 
   return (
-    <Category onClick={onClick}>
+    <Category href={url} style={{
+      color: text.primary
+    }}>
       <Icon>{icon}</Icon>
-      <Title fontSize={body1.fontSize} fontWeight={fontWeightBold}>
+      <Title style={{
+        fontSize: body1.fontSize,
+        fontWeight: fontWeightBold,
+      }} >
         {title}
       </Title>
       <IconChevronRight size={20} />
@@ -104,8 +110,6 @@ const Home = () => {
 
   const openAlert = () => setShowAlert(true)
   const closeAlert = () => setShowAlert(false)
-
-  const goTo = (route) => () => router.push(route)
 
   return (
     <Layout stats={data?.site_stats}>
@@ -158,79 +162,79 @@ const Home = () => {
                 <CategoryButton
                   title="COVID-19"
                   icon={<Virus />}
-                  onClick={goTo('/notices/covid19')}
+                  url="/notices/covid19"
                 />
               )}
               <CategoryButton
                 title="Overdose Prevention"
                 icon={<OverdosePrevention />}
-                onClick={goTo('/facilities?service=overdose_prevention')}
+                url="/facilities?service=overdose_prevention"
               />
               {/* TODO: add condition to display button */}
               {/* <CategoryButton
                 title="Water Fountains"
                 icon={<WaterFountain />}
-                onClick={goTo('/facilities?service=water_fountain')}
+                url="/facilities?service=water_fountain"
               /> */}
               {!!data?.notices?.warming_center && (
                 <CategoryButton
                   title="Warming Center"
                   icon={<WarmingCooling />}
-                  onClick={goTo('/notices/warming-center')}
+                  url="/notices/warming-center"
                 />
               )}
               {!!data?.notices?.cooling_center && (
                 <CategoryButton
                   title="Cooling Center"
                   icon={<WarmingCooling />}
-                  onClick={goTo('/notices/cooling-center')}
+                  url="/notices/cooling-center"
                 />
               )}
               <HR />
               <CategoryButton
                 title="Shelter"
                 icon={<Shelter />}
-                onClick={goTo('/facilities?service=shelter')}
+                url="/facilities?service=shelter"
               />
               <CategoryButton
                 title="Food"
                 icon={<Food />}
-                onClick={goTo('/facilities?service=food')}
+                url="/facilities?service=food"
               />
               <CategoryButton
                 title="Medical"
                 icon={<Medical />}
-                onClick={goTo('/facilities?service=medical')}
+                url="/facilities?service=medical"
               />
               <CategoryButton
                 title="Hygiene"
                 icon={<Hygiene />}
-                onClick={goTo('/facilities?service=hygiene')}
+                url="/facilities?service=hygiene"
               />
               <CategoryButton
                 title="Technology"
                 icon={<Technology />}
-                onClick={goTo('/facilities?service=technology')}
+                url="/facilities?service=technology"
               />
               <CategoryButton
                 title="Legal"
                 icon={<Legal />}
-                onClick={goTo('/facilities?service=legal')}
+                url="/facilities?service=legal"
               />
               <CategoryButton
                 title="Learning"
                 icon={<Learning />}
-                onClick={goTo('/facilities?service=learning')}
+                url="/facilities?service=learning"
               />
               <CategoryButton
                 title="Crisis Lines"
                 icon={<CrisisLines />}
-                onClick={goTo('/crisis')}
+                url="/crisis"
               />
               <CategoryButton
                 title="Notices"
                 icon={<Notices />}
-                onClick={goTo('/notices?type=general')}
+                url="/notices?type=general"
               />
             </Stack>
           </Grid>

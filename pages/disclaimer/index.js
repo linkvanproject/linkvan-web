@@ -14,7 +14,7 @@ const AboutUs = () => {
   return (
     <Layout stats={data?.site_stats}>
       <Head>
-        <title>Linkvan</title>
+        <title>Linkvan | Disclaimer</title>
       </Head>
       <Container maxWidth="md">
         <Grid container>

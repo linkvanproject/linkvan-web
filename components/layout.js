@@ -14,6 +14,8 @@ import Grid from '@mui/material/Grid'
 import formatDate from 'utils/format-date'
 import theme from '../theme'
 
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 const Header = styled.div`
   background: #f8f8f8;
   border-bottom: 2px solid #ccc;
@@ -84,12 +86,13 @@ const Layout = ({ stats, children, headerStyle }) => {
     event.preventDefault()
     const keyword = event.target.search.value
     if (keyword) {
-      router.push(`/facilities?search=${keyword}`)
+      window.location.href = `/facilities?search=${keyword}`;
     }
   }
 
   return (
     <ThemeProvider theme={theme}>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
       <CssBaseline />
       <Head>
         <meta
