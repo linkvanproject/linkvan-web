@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
 import { useTheme } from '@mui/material/styles'
 import {
   ChevronRight,
@@ -18,9 +17,18 @@ import HR from 'components/hr'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import ButtonBase from '@mui/material/ButtonBase'
+import Typography from '@mui/material/Typography';
 import distanceInWords from 'utils/distance-in-words'
 import getAvailability from 'utils/get-availability'
+
+const ItemLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+
+  &:hover h3 {
+    text-decoration: underline;
+  }
+`
 
 const StyledIcon = styled('div')`
   margin: 0 5px;
@@ -43,7 +51,6 @@ const ColumnArrow = styled(Grid)`
 
 const ListItem = ({ data, filter, location }) => {
   const theme = useTheme()
-  const router = useRouter()
 
   const ColumnOne = styled(Grid)`
     ${theme.breakpoints.up('md')} {
@@ -107,8 +114,6 @@ const ListItem = ({ data, filter, location }) => {
 
   const walkingDistance = getWalkingDistance(data.distance)
 
-  const goTo = (route) => () => router.push(route)
-
   const sortByServices = (a, b) => {
     const nameA = a.key.toLowerCase()
     const nameB = b.key.toLowerCase()
@@ -132,14 +137,14 @@ const ListItem = ({ data, filter, location }) => {
 
   return (
     <>
-      <ButtonBase onClick={goTo(`/facilities/${data.id}`)}>
+      <ItemLink href={`/facilities/${data.id}`}>
         <Grid container>
           <Grid item xs={11}>
             <Grid container>
               <ColumnOne item xs={12} md={8}>
-                <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
+                <Typography variant='h3' fontSize="body1.fontSize" fontWeight="fontWeightBold">
                   {data.name}
-                </Box>
+                </Typography>
                 <Box
                   fontSize="body2.fontSize"
                   display="flex"
@@ -168,7 +173,7 @@ const ListItem = ({ data, filter, location }) => {
             <ChevronRight size={20} />
           </ColumnArrow>
         </Grid>
-      </ButtonBase>
+      </ItemLink>
       <HR />
     </>
   )

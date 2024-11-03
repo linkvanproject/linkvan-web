@@ -9,6 +9,7 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
+import Link from '@mui/material/Link'
 import Stack from 'components/stack'
 import Layout from 'components/layout'
 import HR from 'components/hr'
@@ -20,6 +21,20 @@ const ColumnArrow = styled(Grid)`
   align-self: center;
 `
 
+const NoticeLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 15px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    border-color: ${( {theme }) => theme.palette.primary.dark};
+    text-decoration: underline;
+  }
+`
+
 const Notices = () => {
   const router = useRouter()
   const theme = useTheme()
@@ -29,8 +44,6 @@ const Notices = () => {
       text-align: left;
     }
   `
-
-  const goTo = (route) => () => router.push(route)
 
   /* Fetch notices */
   const apiKey = `/api/notices?type=${router.query.type}`
@@ -59,7 +72,7 @@ const Notices = () => {
           <HR />
           {data.notices?.map((notice) => (
             <>
-              <ButtonBase onClick={goTo(`/notices/${notice.slug}`)}>
+              <NoticeLink href={`/notices/${notice.slug}`}>
                 <Grid container>
                   <ColumnOne item xs={11}>
                     <Box fontSize="body1.fontSize" fontWeight="fontWeightBold">
@@ -70,7 +83,7 @@ const Notices = () => {
                     <ChevronRight size={20} />
                   </ColumnArrow>
                 </Grid>
-              </ButtonBase>
+              </NoticeLink>
               <HR />
             </>
           ))}

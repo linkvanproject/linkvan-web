@@ -11,7 +11,6 @@ import { useTheme } from '@mui/material/styles'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -64,6 +63,21 @@ const StyledTableContainer = styled(TableContainer)`
 
   > table > tbody > tr:last-child * {
     border-bottom: 0;
+  }
+`
+
+const DirectionsLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 15px;
+  border: 1px solid ${( {theme }) => theme.palette.primary.light};
+  border-radius: ${( {theme }) => theme.shape.borderRadius}px;
+  text-decoration: none;
+
+  &:hover {
+    border-color: ${( {theme }) => theme.palette.primary.dark};
+    text-decoration: underline;
   }
 `
 
@@ -141,8 +155,6 @@ const Facility = () => {
 
   const router = useRouter()
   const { data, error } = useSWR(`/api/facilities/${router.query.id}`, fetcher)
-
-  const goTo = (route) => () => router.push(route)
 
   const SectionTitle = (props) => (
     <Box fontSize="h6.fontSize" color="grey.700" mb={1} {...props} />
@@ -235,24 +247,13 @@ const Facility = () => {
               <Map lat={Number(facility.lat)} lng={Number(facility.long)} />
             </Box>
             <Box marginBottom="12px">{facility.address}</Box>
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={goTo(`/facilities/${router.query.id}/directions`)}
-            >
-              <Box
-                display="flex"
-                flex="1"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Box display="flex" alignItems="center">
-                  <Directions size={24} />
-                  <Box marginLeft="12px">Directions</Box>
-                </Box>
-                <ChevronRight size={20} />
+            <DirectionsLink href={`/facilities/${router.query.id}/directions`}>
+              <Box display="flex" alignItems="center">
+                <Directions size={24} />
+                <Box marginLeft="12px">Directions</Box>
               </Box>
-            </Button>
+              <ChevronRight size={20} />
+            </DirectionsLink>
           </StyledPaper>
           <StyledTableContainer
             component={StyledPaper}

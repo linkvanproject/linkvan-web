@@ -111,8 +111,6 @@ const Home = () => {
   const openAlert = () => setShowAlert(true)
   const closeAlert = () => setShowAlert(false)
 
-  const goTo = (route) => () => router.push(route)
-
   return (
     <Layout stats={data?.site_stats}>
       <Head>
