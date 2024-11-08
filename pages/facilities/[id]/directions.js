@@ -11,11 +11,13 @@ import {
   DirectionsService,
   DirectionsRenderer
 } from '@react-google-maps/api'
+import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Layout from 'components/layout'
 import { Walking, Transit, Bicycle, Car, Loading } from 'components/icons'
+import useWindowSize from 'hooks/use-window-size'
 
 const TravelModes = styled(ButtonGroup)`
   position: absolute;
@@ -25,9 +27,15 @@ const TravelModes = styled(ButtonGroup)`
   background-color: white;
 `
 
-const mapContainerStyle = { height: '75%' }
-
 const Directions = () => {
+  const theme = useTheme()
+
+  const windowSize = useWindowSize();
+
+  const mapContainerStyle = {
+    height: windowSize?.width > theme.breakpoints.values.md ? '75vh' : '70vh'
+  }
+
   const userLocation = useNavigatorLocation()
 
   const { isLoaded } = useJsApiLoader({
