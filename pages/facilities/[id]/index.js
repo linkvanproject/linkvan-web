@@ -81,6 +81,12 @@ const DirectionsLink = styled(Link)`
   }
 `
 
+const IconsWraper = styled(Box)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+`
+
 const getIcon = (icon, size) => {
   const icons = {
     male: Male,
@@ -191,14 +197,13 @@ const Facility = () => {
         <Grid item xs={12}>
           <SectionTitle>Welcomes</SectionTitle>
           <StyledPaper elevation={0} variant="outlined">
-            <Box display="flex">
+            <IconsWraper>
               {facility.welcomes?.map((item) => (
                 <Box
                   key={item.key}
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
-                  paddingRight="18px"
                 >
                   {getIcon(item.key, 32)}
                   <Box fontSize="caption.fontSize" paddingTop="6px">
@@ -206,17 +211,17 @@ const Facility = () => {
                   </Box>
                 </Box>
               ))}
-            </Box>
+            </IconsWraper>
           </StyledPaper>
           <SectionTitle>Services</SectionTitle>
           <StyledPaper elevation={0} variant="outlined">
-            <Box display="flex">
+            <IconsWraper>
               {facility.services?.map((item) => (
-                <Box key={item.key} paddingRight="18px">
+                <Box key={item.key}>
                   {getIcon(item.key, 32)}
                 </Box>
               ))}
-            </Box>
+            </IconsWraper>
             <Box display="flex" flexDirection="column">
               {facility.services?.map(
                 (item) =>
