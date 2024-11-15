@@ -98,8 +98,8 @@ const AboutUs = () => {
               </a>
               . Credit for the initial concept and app design belong to the
               incredible folks at{' '}
-              <a href="http://www.link-sf.com/" target="_blank">
-                link-sf.com
+              <a href="https://linksf.sfserviceguide.org/" target="_blank">
+                Link-SF
               </a>{' '}
               who created the original source code made available through{' '}
               <a href="https://github.com/zendesk/linksf" target="_blank">
@@ -113,8 +113,8 @@ const AboutUs = () => {
                 here.
               </a>{' '}
               LinkVan is free software. Our open source code can be found here:{' '}
-              <a href="https://github.com/linkvan/linkvan-web" target="_blank">
-                https://github.com/linkvan/linkvan-web
+              <a href="https://github.com/linkvanproject/linkvan-web" target="_blank">
+                https://github.com/linkvanproject/linkvan-web
               </a>
             </p>
             <p>
