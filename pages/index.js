@@ -34,7 +34,7 @@ import {
   Learning,
   CrisisLines,
   Notices,
-  // WaterFountain
+  WaterFountain
 } from 'components/icons'
 
 const TitleBox = styled.div`
@@ -170,12 +170,12 @@ const Home = () => {
                 icon={<OverdosePrevention />}
                 url="/facilities?service=overdose_prevention"
               />
-              {/* TODO: add condition to display button */}
-              {/* <CategoryButton
+              {!!data?.notices?.water_fountain && (
+                <CategoryButton
                 title="Water Fountains"
                 icon={<WaterFountain />}
                 url="/facilities?service=water_fountain"
-              /> */}
+              />)}
               {!!data?.notices?.warming_center && (
                 <CategoryButton
                   title="Warming Center"
